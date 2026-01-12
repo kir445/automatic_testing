@@ -1,16 +1,23 @@
 name: auto-testing
 on: [push]
+
 jobs:
   run:
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
     container: ubuntu:22.04
-    steps:
-      - uses: actions/checkout@v2
-      - name: sanity-check
-        env:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-        run: |
 
-          # Your ML workflow goes here
-          pip install -r requirements.txt
-          python test.py
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Python + pip
+        run: |
+          apt-get update
+          apt-get install -y python3 python3-pip
+          python3 --version
+          python3 -m pip --version
+
+      - name: Install deps + run test
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements.txt
+          python3 test.py
