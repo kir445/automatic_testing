@@ -5,3 +5,4 @@ pytz
 scipy
 six
 threadpoolctl
+pandas
